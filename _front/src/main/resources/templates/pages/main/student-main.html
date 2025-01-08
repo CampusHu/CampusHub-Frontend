@@ -1,10 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>학생 : 메인페이지</title>
+    <title>학생 : 포탈 사이트 </title>
+
+    <link rel="stylesheet" th:inline="css" th:href="@{/css/main/student-main.css}">
+
 </head>
 <body>
+<div class="main-container">
+    <div class="main-box">
 
+        <div class="user-info-box">
+
+        </div>
+
+        <div class="academic-information">
+
+            <div class="ac-top">
+                <div class="ac-left">
+                    <div class="ac-left-link">
+                        <a href="#">통합정보</a>
+                        <div class="ac-bottom-links">
+                            <a href="#">출석조회</a>
+                            <a href="#">수강신청</a>
+                            <a href="#">성적조회</a>
+                            <a href="#">등록조회</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="ac-right">
+                    <div class="ac-right-schsta">
+                        <table class="tuition-table">
+                            <thead>
+                            <tr>
+                                <th>학기</th>
+                                <th>장학금명</th>
+                                <th>입학금</th>
+                                <th>수업료</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>1학기</td>
+                                <td>기본 장학금</td>
+                                <td>200,000원</td>
+                                <td>1,200,000원</td>
+                            </tr>
+                            <tr>
+                                <td>2학기</td>
+                                <td>성적 우수 장학금</td>
+                                <td>150,000원</td>
+                                <td>1,100,000원</td>
+                            </tr>
+                            <!-- 추가적인 데이터 행을 여기에 삽입 -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="ac-right-credsta">
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="ac-bottom">
+
+            </div>
+        </div>
+
+    </div>
+</div>
 </body>
 </html>

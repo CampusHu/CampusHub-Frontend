@@ -10,6 +10,10 @@ public class MainController {
     public String index() {return "pages/login/LoginPage";}
 
 
+    @GetMapping("/stu-main")
+    public String stumain() {return "pages/main/student-main";}
+
+
     //관리자
     //============================================================================================
 
