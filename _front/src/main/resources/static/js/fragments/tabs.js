@@ -11,9 +11,15 @@ $(function() {
         var existingTab = $("#" + tabId);
 
         if (existingTab.length === 0) {
-            $("#tabs ul").append("<li><a href='#" + tabId + "'>" + tabName + "</a><span class='ui-icon ui-icon-close' role='presentation'></span></li>");
+            $("#tabs ul").append("<li><a href='#" + tabId + "'>" + tabName + "</a><span class='ui-icon ui-icon-close' role='presentation'></span></li> <span class=\"close-btn\">X</span>");
             $("#tabs").append("<div id='" + tabId + "'><p>로딩 중...</p></div>");
             tabs.tabs("refresh");
+
+            // 🔥 탭이 하나만 있을 경우 자동으로 활성화
+            if ($("#tabs ul li").length === 1) {
+                tabs.tabs("option", "active", 0);
+            }
+
 
             $.ajax({
                 url: url,
@@ -35,6 +41,13 @@ $(function() {
         var panelId = $(this).closest("li").remove().attr("aria-controls");
         $("#" + panelId).remove();
         tabs.tabs("refresh");
+    });
+
+    // ❗️ X 버튼 클릭 시 모든 탭 삭제 기능 추가
+    $("#tabs").on("click", ".close-btn", function () {
+        $("#tabs ul li").remove();  // 모든 탭 제목 삭제
+        $("#tabs > div").remove();  // 모든 탭 콘텐츠 삭제
+        tabs.tabs("refresh");       // 탭 UI 갱신
     });
 
     // 첫 번째 탭 자동 클릭
