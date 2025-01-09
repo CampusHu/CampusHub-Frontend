@@ -1,170 +1,280 @@
-/* 전체 페이지 스타일 */
 body {
-
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    overflow: hidden; /* 페이지에서 스크롤이 생기지 않도록 설정 */
-}
-
-a {
-    text-decoration: none;
-}
-
-/* 부모 요소 중앙 정렬 */
-.main-container {
-    background: url("/img/login/uni_background.jpg") center/cover no-repeat;
-    background-attachment: fixed;
-    position: relative;
+    background-color: #f8f9fa;
     display: flex;
-    justify-content: center;  /* 수평 중앙 정렬 */
-    align-items: center;      /* 수직 중앙 정렬 */
-    height: 100vh;            /* 화면 전체 높이 사용 */
-    margin: 0;                /* 기본 margin 제거 */
-    padding: 0;
-    filter: brightness(1.2) saturate(1.5); /* 배경 이미지 밝기 및 채도 조정 */
+    flex-direction: row;
+    height: 100vh; /* 전체 화면 높이 */
 }
 
-/* 자식 요소 크기 설정 (예시로 너비와 높이를 설정) */
-.main-box {
+.container {
+    background-image: url("/img/main/background.png");
+    background-size: 100% 100%; /* 컨테이너의 너비와 높이를 채우도록 강제 조정 */
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
-          /* 원하는 너비 */
-    height: 100%;              /* 원하는 높이 */
+    width: 100%;
+    height: 100%; /* 컨테이너 전체 높이 */
+}
+
+.sidebar {
+    background-color: rgba(3, 0, 99, 0.9);
+    color: white;
+    width: 25%;
+    min-width: 300px;
+    padding: 0; /* 패딩을 0으로 설정하여 상단에 붙도록 조정 */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box; /* 패딩을 포함하여 너비 계산 */
+    height: 100%; /* 사이드바 높이를 100%로 설정 */
+}
+
+.sidebar-header {
+    margin-bottom: 20px;
+    width: 100%; /* 100% 너비 유지 */
+    display: flex;
+    align-items: center;
+    background-color: rgba(28, 23, 189, 0.9); /* 50% 투명도 */
+    padding: 10px 20px; /* 위아래 10px, 좌우 20px 패딩 설정 */
+    box-sizing: border-box; /* 패딩을 포함하여 너비 계산 */
+}
+
+.logo {
+    width: 80px;
+    height: 80px; /* 가로와 세로를 동일하게 설정 */
+    border-radius: 50%; /* 원형으로 만들기 */
+    overflow: hidden; /* 이미지를 컨테이너에 맞게 자르기 */
+    margin-bottom: 10px;
+    object-fit: cover; /* 이미지를 컨테이너에 꽉 채우기 */
+}
+
+
+.text-container {
+    display: flex; /* 텍스트 컨테이너를 Flexbox로 설정 */
+    align-items: center;
+    flex-direction: column; /* 세로로 배치 */
+}
+
+.text-container h1 {
+    margin: 0; /* 기본 마진 제거 */
+}
+
+.text-container p {
+    margin: 0; /* 기본 마진 제거 */
+}
+
+.profile-container {
+    align-items: center;
+    background-color: #F6F6E3;
+    height: 75%; /* 프로필 높이 조정 */
+    width: 90%;
+    border-radius: 20px;
+    margin: 0 auto; /* 중앙 정렬 */
+}
+
+.profile {
+    color: black;
+    padding: 20px;
+}
+
+.profile h2 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.schedule {
+    margin: 20px auto;
     background-color: white;
-    margin: 0;                /* 기본 margin 제거 */
-    padding: 0;
+    color: black;
+    padding: 10px;
+    border-radius: 20px;
+    width: 90%;
+    border: 1px solid black; /* 검은색 테두리 추가 */
 }
 
-.user-info-box {
+.schedule .date {
+    font-size: 1em;
+    margin-bottom: 10px;
+}
+
+.button-container {
     display: flex;
-    flex-shrink: 0;           /* 크기 변경 방지 */
-    width: 400px;             /* 고정 너비 */
-    height: 100%;
-    background-color: brown;
+    justify-content: flex-end;
+    padding: 20px;
+    margin-top: 20px;
 }
 
-.academic-information {
-    display: flex;
-    flex-direction: column;
-
-    flex-shrink: 0;           /* 크기 변경 방지 */
-    width: 700px;             /* 고정 너비 */
-    height: 100%;
-
-}
-
-.ac-top{
-    display: flex;
-    width: 100%;
-    height: 55%;
-}
-
-.ac-left{
-
-    width: 50%;
-}
-
-
-.ac-bottom{
-    background-color: violet;
-    width: 100%;
-    height: 45%;
-}
-
-.ac-left-link {
-    padding: 50px 10px;
-    display: flex;
-    flex-direction: column;  /* 세로로 정렬 */
-    justify-content: center;  /* 수평 중앙 정렬 */
-    align-items: center;      /* 수직 중앙 정렬 */
+.logout-button {
+    background-color: #F6F6E3;
+    color: black;
+    padding: 10px;
     text-align: center;
+    width: 30%;
+    border-radius: 30px;
+    margin-top: 20px;
+    cursor: pointer;
 }
 
-/*통합정보*/
-.ac-left-link a {
-    width: 300px;  /* 항목 너비를 고정 */
-    height: 130px;  /* 항목 높이 */
-    background-color: white;
-    border-radius: 20px;
-    display: flex;  /* flexbox 사용 */
-    justify-content: center;  /* 수평 중앙 정렬 */
-    align-items: center;      /* 수직 중앙 정렬 */
-    text-align: center;       /* 텍스트 중앙 정렬 */
-    color: black;            /* 텍스트 색상 설정 */
-    font-size: 30px;          /* 글자 크기 설정 */
-    margin-bottom: 13px;
-    border: 2px solid gray;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
-    font-weight: bold;
+.logout-button:hover {
+    background-color: #E9E4C8;
 }
 
-.ac-bottom-links {
-    display: flex;
-    flex-wrap: wrap;  /* 두 개씩 아래로 배치 */
-    justify-content: center;  /* 수평 중앙 정렬 */
-    gap: 10px;  /* 항목 간 간격 */
-}
-
-/*출석 / 수강 / 성적 / 등록 */
-.ac-bottom-links a {
-    width: 145px;
-    height: 130px;
-    background-color: white;
-    border-radius: 20px;
-    display: flex;  /* flexbox 사용 */
-    justify-content: center;  /* 수평 중앙 정렬 */
-    align-items: center;      /* 수직 중앙 정렬 */
-    text-align: center;       /* 텍스트 중앙 정렬 */
-    color: black;            /* 텍스트 색상 설정 */
-    font-size: 25px;          /* 글자 크기 설정 */
-    margin: 0;
-    font-weight: bold;
-}
-
-
-.ac-right{
-    padding: 0 5px;
+.main-content {
+    width: 75%      ;
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    background-color: green;
-
-
-    width: 50%;
+    gap: 20px;
 }
 
-.ac-right-schsta{
-display: flex;
-    justify-content: center;  /* 수평 중앙 정렬 */
-    align-items: center;      /* 수직 중앙 정렬 */
-    height: 50%;
+.top-container {
+    display: flex; /* 가로 방향으로 배치 */
+    justify-content: space-between; /* 균등한 간격 */
+    gap: 20px; /* 간격 */
 }
 
-.tuition-table {
-    width: 100%;
-    border-collapse: collapse; /* 테이블의 테두리 겹침 방지 */
-
+.services {
+    background-color: white;
+    padding: 20px; /* 내부 여백 */
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: calc(100% - 40px); /* 전체 너비에서 패딩을 제외한 너비 설정 */
+    margin: 0 auto; /* 중앙 정렬 */
 }
 
-.tuition-table th, .tuition-table td {
-    border: 1px solid #ccc; /* 테이블 셀 테두리 */
-    padding: 5px;
+.service-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* 한 열만 차지 */
+    gap: 10px; /* 항목 간 간격 */
+    padding: 10px; /* 그리드 내부 여백 */
+    box-sizing: border-box; /* 컨테이너 크기 조정 */
+}
+
+.service-item {
+    display: flex; /* 아이콘과 텍스트를 가로로 정렬 */
+    align-items: center; /* 세로 가운데 정렬 */
+    position: relative; /* 텍스트 중앙 정렬을 위한 기준 */
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.4); /* 그림자 */
+    background-color: white; /* 배경색 */
+    padding: 10px 20px; /* 내부 여백 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    border-radius: 20px; /* 둥근 테두리 */
+    border: 1px solid #ddd; /* 테두리 */
+    width: 100%; /* 부모 컨테이너에 맞게 */
+    max-width: 400px; /* 항목의 최대 너비 제한 */
+    margin: 10px auto; /* 상하 여백 및 가운데 정렬 */
+}
+
+.service-item img {
+    position: absolute; /* 이미지 위치 고정 */
+    left: 20px; /* 부모 컨테이너 기준으로 왼쪽에 배치 */
+    width: 30px; /* 아이콘 크기 */
+    height: 30px; /* 아이콘 크기 */
+    border-radius: 5px; /* 둥근 모서리 */
+    object-fit: contain; /* 아이콘 비율 유지 */
+}
+
+.service-item span {
+    flex: 1; /* 텍스트를 가운데 정렬 */
+    font-size: 16px; /* 텍스트 크기 */
+    font-weight: bold; /* 텍스트 굵기 */
+    color: #333; /* 텍스트 색상 */
     text-align: center; /* 텍스트 중앙 정렬 */
 }
 
-.tuition-table th {
-    background-color: #f4f4f4; /* 헤더 배경 색상 */
-    font-weight: bold; /* 헤더 글자 굵게 */
+.status-container {
+    display: flex; /* Flexbox 활성화 */
+    flex-direction: column; /* 세로로 배치 */
+    width: calc(100% - 40px); /* 전체 너비에서 패딩을 제외한 너비 설정 */
+    margin: 0 auto; /* 중앙 정렬 */
+    gap: 20px; /* 항목 간 간격 */
 }
 
-.tuition-table td {
-    background-color: #fff; /* 데이터 셀 배경 색상 */
+.scholarship-status {
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.tuition-table tr:nth-child(even) td {
-    background-color: #f9f9f9; /* 짝수 행 배경 색상 */
+.scholarship-status table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
 }
 
-.ac-right-credsta{
-    background-color: black;
-    height: 50%;
+.scholarship-status th {
+    padding: 8px;
+    text-align: center;
+    border-right: 1px solid darkgrey;
+    border-bottom: 1px solid darkgrey;
 }
+
+.scholarship-status td {
+    border: none; /* 테두리 제거 */
+    border-bottom: 1px solid darkgrey;
+    border-right: 1px solid darkgrey;
+    padding: 8px;
+    text-align: center;
+}
+
+.scholarship-status th:last-child,
+.scholarship-status td:last-child {
+    border-right: none;
+}
+
+.scholarship-status tr:last-child td {
+    border-bottom: none; /* 아래쪽 테두리 제거 */
+}
+
+
+.credit-status {
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.credit-status table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.credit-status th,
+.credit-status td {
+    border: 1px solid darkgrey;
+    padding: 8px;
+    text-align: center;
+}
+
+.credit-status th {
+    background-color: lightgrey;
+}
+
+/* 하단 컨테이너 설정 */
+.bottom-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%; /* 넓이를 100%로 설정 */
+}
+
+.announcement{
+    width: 51%; /* 하단 섹션의 넓이를 48%로 설정 */
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.4);
+}
+
+.calendar{
+    width: 48%; /* 하단 섹션의 넓이를 48%로 설정 */
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.4);
+}
+
+
 
