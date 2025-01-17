@@ -50,10 +50,9 @@ public class SecurityConfig {
 				.sessionManagement(session ->
 						session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Stateless 세션 정책
 				.authorizeHttpRequests(authorize -> authorize
-						.requestMatchers("/**", "/api/login", "/api/join/", "/login", "/register").permitAll() // 로그인 및 회원가입 페이지 접근 허용
-						.requestMatchers(toH2Console()).permitAll() // H2 콘솔 접근 허용
+						.requestMatchers("/**").permitAll() // 모든 요청에 대해 권한 허용
 						.requestMatchers(ApiUrls.PERMIT_API_URLS).permitAll() // 특정 API 경로 허용
-						.anyRequest().authenticated()) // 나머지 요청은 인증 필요
+						.anyRequest().permitAll()) // 나머지 요청도 모두 허용
 				.exceptionHandling(exceptions ->
 						exceptions
 								.authenticationEntryPoint(entryPoint) // 인증 실패 처리
@@ -62,6 +61,7 @@ public class SecurityConfig {
 
 		return http.build();
 	}
+
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
