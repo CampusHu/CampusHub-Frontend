@@ -19,42 +19,46 @@ window.addEventListener('load', function () {
         <p>${storedUserInfo.department}(${storedUserInfo.course})</p>
             <div class="button-container">
         <button id="editInfoBtn">정보수정</button>
-        <button id="logoutBtn">로그아웃</button>
+        <button id="logoutButton">로그아웃</button>
         </div>
     `;
     document.querySelector('.login-info').appendChild(userInfoElement);
 
-    // 정보 변경 버튼 클릭 시
+// 정보 변경 버튼 클릭 시 바로 페이지 이동
     document.getElementById('editInfoBtn').addEventListener('click', function () {
-        const newName = prompt('새로운 이름을 입력하세요', storedUserInfo.name);
-        const newDepartment = prompt('새로운 학과를 입력하세요', storedUserInfo.department);
-        const newCourse = prompt('새로운 전공을 입력하세요', storedUserInfo.course);
-
-        if (newName && newDepartment && newCourse) {
-            const updatedUserInfo = {
-                name: newName,
-                department: newDepartment,
-                course: newCourse
-            };
-
-            // 변경된 값 저장
-            localStorage.setItem('userInfo', JSON.stringify(updatedUserInfo));
-
-            // 화면 업데이트
-            document.querySelector('.login-info').innerHTML = '';
-            window.location.reload();
-        }
+        window.location.href = '/mypage_info';  // 새로운 페이지로 이동 (예: '/newPage')
     });
 
     // 로그아웃 버튼 클릭 시
-    document.getElementById('logoutBtn').addEventListener('click', function () {
-        // localStorage 초기화
-        localStorage.removeItem('userInfo');
+    document.getElementById("logoutButton").addEventListener("click", function() {
+        const token = localStorage.getItem("jwtToken");
 
-        // 로그인 페이지로 리다이렉트
-        window.location.href = '/login';  // 실제 로그인 페이지 경로로 변경
+        if (token) {
+            fetch("/api/logout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+                body: JSON.stringify({}),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("서버 응답:", data);  // 서버 응답을 확인
+                    if (data.status) {
+                        localStorage.removeItem("jwtToken");
+                        window.location.href = "/";
+                    } else {
+                        alert("로그아웃 실패");
+                    }
+                })
+                .catch(error => {
+                    console.error("로그아웃 오류:", error);
+                    alert("로그아웃에 실패했습니다.");
+                });
+        } else {
+            alert("로그인 정보가 없습니다.");
+        }
     });
 });
-
-
 
