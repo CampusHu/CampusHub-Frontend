@@ -1,42 +1,53 @@
 // '조회' 버튼 클릭 시 학생 정보 목록을 불러오는 함수
-document.getElementById('admin-stuinfo-searchBtn').addEventListener('click', function() {
-    const url = '/api/admin/students/condition';  // 학생 정보 목록을 가져올 URL
+document.getElementById('admin-stuinfo-searchBtn').addEventListener('click', function () {
+    const url = '/api/admin/students/condition'; // 학생 정보 목록을 가져올 URL
 
     console.log("학생 정보 목록을 불러오는 중...");
 
-    fetch(url)  // fetch API를 사용하여 서버에서 학생 정보를 요청
-        .then(response => response.json())  // 응답을 JSON 형식으로 변환
+    // 로컬 스토리지에서 JWT 토큰 가져오기
+    const token = localStorage.getItem('jwtToken');
+
+    // 서버에 fetch 요청
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
-            const tableBody = document.getElementById('admin-stuinfo-TableBody');  // 학생 정보 테이블의 tbody 요소
-            tableBody.innerHTML = ''; // 기존 데이터를 제거 (새로고침)
+            console.log("서버 응답 데이터:", data); // 서버 데이터 구조 확인
+            const tableBody = document.getElementById('admin-stuinfo-TableBody');
+            tableBody.innerHTML = '';
 
-            // 서버에서 받은 데이터를 기반으로 테이블에 새로운 행 추가
-            data.forEach((student, index) => {  // index 값을 사용하여 순차적인 번호를 할당
-                const row = document.createElement('tr');  // 새로운 행 추가
-
-                // 학생 정보 데이터 (학과, 이름, 학번 등)
-                row.classList.add('student-row');  // CSS 클래스 추가
-                row.dataset.id = student.id;  // 실제 DB에서 받아온 고유 ID를 dataset.id로 설정
+            data.data.forEach((student, index) => {
+                const row = document.createElement('tr');
+                row.dataset.id = student.userNum;
                 row.innerHTML = `
-                    <td><input type="checkbox" class="student-checkbox"></td>  <!-- 체크박스 -->
-                    <td data-field="index">${index + 1}</td>  <!-- 순차적인 번호 (1부터 시작) -->
-                    <td data-field="name" style="text-align: left;">${student.name}</td>  <!-- 이름 -->
-                    <td data-field="studentId">${student.studentId}</td>  <!-- 학번 -->
-                    <td data-field="department">${student.department}</td>  <!-- 학과 -->
-                    <td data-field="status">${student.status}</td>  <!-- 상태 -->
-                    <td data-field="remarks">${student.remarks}</td>  <!-- 비고 -->
+                    <td><input type="checkbox" class="student-checkbox"></td>
+                    <td>${index + 1}</td>
+                    <td data-field="name" style="text-align: left;">${student.username}</td>
+                    <td data-field="studentId">${student.userNum}</td>
+                    <td data-field="department">${student.deptName}</td>
+                    <td data-field="status">${student.status}</td>
+                    <td data-field="remarks"></td>
                 `;
-                tableBody.appendChild(row);  // 테이블에 새로운 행 추가
+                tableBody.appendChild(row);
             });
+
         })
         .catch(error => {
-            console.error('Error:', error);  // 에러 발생 시 콘솔에 에러 메시지 출력
-            alert('학생 정보를 불러오는 중 오류가 발생했습니다.');  // 사용자에게 오류 메시지 표시
+            console.error('Error:', error);
+            alert('학생 정보를 불러오는 중 오류가 발생했습니다.');
         });
+
 });
-
-
-
 
 // 신규 버튼 클릭 시 새로운 행 추가
 document.getElementById('admin-stuinfo-newBtn').addEventListener('click', function() {
@@ -91,45 +102,38 @@ document.getElementById('admin-stuinfo-newBtn').addEventListener('click', functi
     alert('새로운 학생 정보를 추가했습니다. 내용을 확인하세요.');
 });
 
-
-// 실시간으로 수정 내용 반영
 function addRealTimeEditing(row) {
-    const nameCell = row.querySelector('td[data-field="name"]');
-    const studentIdCell = row.querySelector('td[data-field="studentId"]');
-    const departmentCell = row.querySelector('td[data-field="department"]');
-    const statusCell = row.querySelector('td[data-field="status"]');
-    const remarkCell = row.querySelector('td[data-field="remark"]');
+    const nameCell = row.querySelector('td[data-field="name"]') || null;
+    const studentIdCell = row.querySelector('td[data-field="studentId"]') || null;
+    const departmentCell = row.querySelector('td[data-field="department"]') || null;
+    const statusCell = row.querySelector('td[data-field="status"]') || null;
+    const remarkCell = row.querySelector('td[data-field="remark"]') || null;
 
-    // 폼 필드에 실시간으로 입력되는 값 반영
-    document.getElementById('name').addEventListener('input', function() {
-        if (nameCell) {
-            nameCell.textContent = this.value;  // 이름 수정 반영
-        }
-    });
-
-    document.getElementById('studentId').addEventListener('input', function() {
-        if (studentIdCell) {
-            studentIdCell.textContent = this.value;  // 학번 수정 반영
-        }
-    });
-
-    document.getElementById('department').addEventListener('input', function() {
-        if (departmentCell) {
-            departmentCell.textContent = this.value;  // 학과 수정 반영
-        }
-    });
-
-    document.getElementById('status').addEventListener('input', function() {
-        if (statusCell) {
-            statusCell.textContent = this.value;  // 상태 수정 반영
-        }
-    });
-
-    document.getElementById('remark').addEventListener('input', function() {
-        if (remarkCell) {
-            remarkCell.textContent = this.value;  // 비고 수정 반영
-        }
-    });
+    if (nameCell) {
+        document.getElementById('name').addEventListener('input', function () {
+            nameCell.textContent = this.value;
+        });
+    }
+    if (studentIdCell) {
+        document.getElementById('studentId').addEventListener('input', function () {
+            studentIdCell.textContent = this.value;
+        });
+    }
+    if (departmentCell) {
+        document.getElementById('department').addEventListener('input', function () {
+            departmentCell.textContent = this.value;
+        });
+    }
+    if (statusCell) {
+        document.getElementById('status').addEventListener('input', function () {
+            statusCell.textContent = this.value;
+        });
+    }
+    if (remarkCell) {
+        document.getElementById('remark').addEventListener('input', function () {
+            remarkCell.textContent = this.value;
+        });
+    }
 }
 
 //저장버튼
