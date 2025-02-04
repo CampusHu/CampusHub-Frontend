@@ -11,11 +11,11 @@ public enum CourseGrade {
 	private final String name;
 
 	public static CourseGrade of(String koreanName) {
-		if(koreanName == "1학년") {
+		if(koreanName.equals("1학년")) {
 			return FiRST_GRADE;
-		} else if(koreanName == "2학년") {
+		} else if(koreanName.equals("2학년")) {
 			return SECOND_GRADE;
-		} else if(koreanName == "3학년") {
+		} else if(koreanName.equals("3학년")) {
 			return THIRD_GRADE;
 		} else return FOURTH_GRADE;
 	}

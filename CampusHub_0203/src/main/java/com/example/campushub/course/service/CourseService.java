@@ -151,8 +151,8 @@ public class CourseService {
 		Course course = courseRepository.findById(courseId)
 			.orElseThrow(CourseNotFoundException::new);
 
-		course.edit(editDto.getCourseName(), editDto.getRoom(), CourseDivision.valueOf(editDto.getDivision()),
-			CourseDay.valueOf(editDto.getCourseDay()), CourseGrade.valueOf(editDto.getCourseGrade()), editDto.getStartPeriod(),
+		course.edit(editDto.getCourseName(), editDto.getRoom(), CourseDivision.of(editDto.getDivision()),
+			CourseDay.of(editDto.getCourseDay()), CourseGrade.of(editDto.getCourseGrade()), editDto.getStartPeriod(),
 			editDto.getEndPeriod(), editDto.getCredits(), editDto.getAttScore(), editDto.getAssignScore(), editDto.getMidScore(), editDto.getFinalScore());
 	}
 

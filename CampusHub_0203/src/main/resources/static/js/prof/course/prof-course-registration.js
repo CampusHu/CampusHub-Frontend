@@ -74,60 +74,73 @@ document.getElementById('prof_course_registration_newBtn').addEventListener('cli
 
 // 저장 버튼
 document.getElementById('prof_course_registration_savBtn').addEventListener('click', function () {
-    // 입력 필드에서 값 가져오기
     const courseName = document.getElementById('prof_course_registration_name').value;
     const courseGrade = document.getElementById('prof_course_registration_grade').value;
     const credits = parseInt(document.getElementById('prof_course_registration_credits').value, 10);
     const room = document.getElementById('prof_course_registration_classroom').value;
-    const division = document.getElementById('courseType').value;
-    const courseDay = document.getElementById('dayOfWeek').value; // 선택한 요일 가져오기
+    const courseDay = document.getElementById('dayOfWeek').value;
     const startPeriod = parseInt(document.getElementById('classTime').value, 10);
     const endPeriod = parseInt(document.getElementById('endClassTime').value, 10);
 
-    // 선택된 행이 있는지 확인
+    // 한글 → 숫자 변환 매핑
+    const divisionMapping = {
+        "전공필수": 0,
+        "전공선택": 1,
+        "교양": 2
+    };
+
+    // 숫자 → 한글 변환 매핑 (신규 저장 시 사용)
+    const reverseDivisionMapping = {
+        0: "전공필수",
+        1: "전공선택",
+        2: "교양"
+    };
+
+    const divisionText = document.getElementById('courseType').value;
     const selectedRow = document.querySelector('#prof_course_registration_TableBody tr.selected');
+
     let url = '';
     let method = '';
+    let division;
 
     if (selectedRow) {
         const courseIdInRow = selectedRow.dataset.id;
-        // 신규 강의 추가 또는 기존 강의 수정
         if (courseIdInRow.startsWith('new+')) {
             url = '/api/professor/course';
             method = 'POST';
+            division = divisionText;  // 신규 저장 시 한글로 보냄
         } else {
             url = `/api/professor/course/${courseIdInRow}`;
-            method = 'PUT';
+            method = 'PATCH';
+            division = divisionMapping[divisionText];  // 수정 시 숫자로 변환
         }
     } else {
         url = '/api/professor/course';
-        method = 'POST'; // 신규 추가
+        method = 'POST';
+        division = divisionText;  // 신규 저장 시 한글로 보냄
     }
 
     // 강의 데이터 객체 생성
     const courseData = {
         courseName: courseName,
         room: room,
-        division: division,
-        courseDay: courseDay, // 사용자 선택에 따라 요일 설정
+        division: division, // POST는 한글, PATCH는 숫자로 설정
+        courseDay: courseDay,
         courseGrade: courseGrade,
         startPeriod: startPeriod,
         endPeriod: endPeriod,
         credits: credits
     };
 
-    // 전송할 데이터 콘솔 출력
     console.log('전송할 강의 데이터:', JSON.stringify(courseData, null, 2));
 
-    // 로컬 스토리지에서 JWT 토큰 가져오기
     const token = localStorage.getItem('jwtToken');
 
-    // 요청 보내기
     fetch(url, {
         method: method,
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}` // Authorization 헤더 공백 제거
+            'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(courseData)
     })
@@ -141,7 +154,7 @@ document.getElementById('prof_course_registration_savBtn').addEventListener('cli
             }
         })
         .then(data => {
-            alert(method === 'PUT' ? '강의 정보가 성공적으로 수정되었습니다.' : '새로운 강의 정보가 성공적으로 저장되었습니다.');
+            alert(method === 'PATCH' ? '강의 정보가 성공적으로 수정되었습니다.' : '새로운 강의 정보가 성공적으로 저장되었습니다.');
             document.getElementById('prof_course_registration_searchBtn').click();
         })
         .catch(error => {
@@ -149,6 +162,7 @@ document.getElementById('prof_course_registration_savBtn').addEventListener('cli
             alert('강의 정보를 저장하는 중 오류가 발생했습니다: ' + error.message);
         });
 });
+
 
 
 

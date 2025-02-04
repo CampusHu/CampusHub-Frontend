@@ -141,8 +141,9 @@ public class MainController {
     @GetMapping("/course-regist")
     public String courseRegist() {return "pages/professor/course/prof-course-registration";}
 
-
-
+    //수강 시간표
+    @GetMapping("/course-timetable")
+    public String courseTimeTable() {return "pages/professor/course/prof-course-timetable";}
 
     //성적 기입
     @GetMapping("/enter-grade")

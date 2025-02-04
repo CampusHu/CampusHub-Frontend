@@ -11,13 +11,13 @@ public enum CourseDay {
 	private final String name;
 
 	public static CourseDay of(String koreaName) {
-		if ("월요일".equals(koreaName)) {
+		if (koreaName.equals("월요일")) {
 			return MONDAY;
-		} else if ("화요일".equals(koreaName)) {
+		} else if (koreaName.equals("화요일")) {
 			return TUESDAY;
-		} else if ("수요일".equals(koreaName)) {
+		} else if (koreaName.equals("수요일")) {
 			return WEDNESDAY;
-		} else if ("목요일".equals(koreaName)) {
+		} else if (koreaName.equals("목요일")) {
 			return THURSDAY;
 		} else {
 			return FRIDAY;

@@ -7,14 +7,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum CourseDivision {
 	//전공 필수, 전공 선택, 교양
-	MAJOR_REQUIRED("전공 필수"), MAJOR_ELECTIVE("전공 선택"), GENERAL("교양");
+	MAJOR_REQUIRED("전공필수"), MAJOR_ELECTIVE("전공선택"), GENERAL("교양");
 
 	private final String name;
 
 	public static CourseDivision of(String koreanName) {
-		if(koreanName == "전공필수") {
+		if(koreanName.equals(MAJOR_REQUIRED.getName())) {
 			return MAJOR_REQUIRED;
-		} else if(koreanName == "전공선택") {
+		} else if(koreanName.equals(MAJOR_ELECTIVE.getName())) {
 			return MAJOR_ELECTIVE;
 		} else return GENERAL;
 	}
