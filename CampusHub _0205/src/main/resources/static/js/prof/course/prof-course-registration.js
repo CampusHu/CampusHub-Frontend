@@ -28,7 +28,7 @@ document.getElementById('prof_course_registration_searchBtn').addEventListener('
                     <td>${course.professorName}</td>
                     <td>${course.courseRoom}</td>
                     <td>${course.courseDay}</td>
-                    <td>${course.startPeriod} - ${course.endPeriod}</td>
+                    <td>${course.startPeriod}교시- ${course.endPeriod}교시</td>
                 `;
                 tableBody.appendChild(row);
             });

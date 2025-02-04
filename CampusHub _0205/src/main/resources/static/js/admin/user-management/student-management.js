@@ -92,7 +92,7 @@ document.getElementById('admin-stuinfo-TableBody').addEventListener('click', fun
                 }
             })
             .catch(error => {
-                console.error('AJAX 요청 중 오류가 발생했습니다:', error);
+                console.err-or('AJAX 요청 중 오류가 발생했습니다:', error);
                 alert('학생 정보를 불러오는 중 오류가 발생했습니다.');
             });
     }
@@ -249,7 +249,7 @@ document.getElementById('admin-stuinfo-savBtn').addEventListener('click', functi
         phone: phone, // 학생의 연락처
         email: email, // 학생의 이메일
         address: address, // 학생의 주소
-        type: "STUDENT"  // "STUDENT" 타입 고정
+        type: "학생"  // "STUDENT" 타입 고정
     };
 
     // 로컬 스토리지에서 JWT 토큰 가져오기
